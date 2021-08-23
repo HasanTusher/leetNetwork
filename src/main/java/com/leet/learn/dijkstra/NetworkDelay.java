@@ -90,25 +90,9 @@ public class NetworkDelay {
 
 
     public  int networkDelayTime(int[][] times, int n, int k) {
-        Dfs dfs = new Dfs();
-        Set<Integer> integerSet = new HashSet<Integer>();
-        int cost = 0;
-        integerSet.add(k);
-        for(int i=0; i<times.length; i++){
-            if(times[i][0] == k){
-                Result result = dfs.getResultByDfs(times, i);
-                if(result.getCost() > cost){
-                    cost = result.getCost();
-                }
-                integerSet.addAll(result.getTraversed());
-                System.out.println(result.toString());
-            }
-        }
-
-        if(integerSet.size() < n){
-            return -1;
-        }
-        return cost;
+        Dijkstra dijkstra = new Dijkstra();
+        dijkstra.getShortestPathToAll(times, k);
+        return 0;
     }
     public static void main(String[] args) {
         NetworkDelay networkDelay = new NetworkDelay();
@@ -117,13 +101,8 @@ public class NetworkDelay {
                 {2,3,1},
                 {3,4,1}
         };
-        //n = 4, 4 nodes need to be reached
-        //k = 2 ; //starting node
-        Stack<Integer> integerStack =  new Stack<Integer>();
-        integerStack.push(1);
-        int a = 1;
 
         networkDelay.networkDelayTime(times, 4, 2);
-        System.out.println(integerStack.contains(a));
+        //System.out.println(integerStack.contains(a));
     }
 }

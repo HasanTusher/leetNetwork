@@ -20,17 +20,16 @@ public class Dijkstra {
      *
      * }
      */
-    public static HashMap<Integer, Integer> getShortestPathToAll(int[][] arr, int startingNode){
+    public HashMap<Integer, Integer> getShortestPathToAll(int[][] arr, int startingNode){
         PriorityQueue<Vertex> priorityQueue = new PriorityQueue<Vertex>();
         //create a new node
-        Vertex vertex = new Vertex();
-        vertex.setDest(startingNode);
-        vertex.setCost(0);
+        Vertex vertex = new Vertex(startingNode, 0);
         priorityQueue.add(vertex);
 
         while (!priorityQueue.isEmpty()){
             Vertex popped = priorityQueue.poll();
-
+            this.findDestinations(arr, popped.dest, priorityQueue);
+            System.out.println(priorityQueue);
 //            result.getTraversed().add(popped);
 //            for(int i = 0; i< arr.length; i++){
 //                if(arr[i][0] == popped){ //found
@@ -43,6 +42,14 @@ public class Dijkstra {
 
         }
         return null;
+    }
+
+    private void findDestinations(int[][] arr, int source, PriorityQueue<Vertex> vertices){
+        for(int i =0; i< arr.length; i++){
+            if(arr[i][0] == source){
+                vertices.add(new Vertex(arr[i][1], arr[i][2]));
+            }
+        }
     }
 
 
