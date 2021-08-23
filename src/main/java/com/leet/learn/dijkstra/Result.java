@@ -1,4 +1,4 @@
-package com.leet.learn;
+package com.leet.learn.dijkstra;
 
 import java.util.ArrayList;
 import java.util.List;
