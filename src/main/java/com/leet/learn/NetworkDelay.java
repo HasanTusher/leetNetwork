@@ -1,14 +1,19 @@
 package com.leet.learn;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 
 public class NetworkDelay {
 
 
     public static int networkDelayTime(int[][] times, int n, int k) {
+        Set<Integer> integerSet = new HashSet<Integer>();
+        integerSet.add(k);
         for(int i=0; i<times.length; i++){
             if(times[i][0] == k){
                 Result result = Dfs.getResultByDfs(times, i);
+                integerSet.addAll(result.getTraversed());
                 System.out.println(result.toString());
             }
         }

@@ -1,8 +1,24 @@
 package com.leet.learn;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Result {
     int cost;
     int iteration;
+    List<Integer> traversed;
+
+    public Result() {
+        this.traversed = new ArrayList<Integer>();
+    }
+
+    public List<Integer> getTraversed() {
+        return traversed;
+    }
+
+    public void setTraversed(List<Integer> traversed) {
+        this.traversed = traversed;
+    }
 
     public int getCost() {
         return cost;
@@ -25,6 +41,7 @@ public class Result {
         return "Result{" +
                 "cost=" + cost +
                 ", iteration=" + iteration +
+                ", integerList=" + traversed +
                 '}';
     }
 }

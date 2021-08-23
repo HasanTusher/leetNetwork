@@ -25,7 +25,7 @@ public class Dfs {
         //int source = arr[startingIndex][0];
         while (!integerStack.isEmpty()){
             int popped = integerStack.pop();
-
+            result.getTraversed().add(popped);
             for(int i = 0; i< arr.length; i++){
                 if(arr[i][0] == popped){ //found
                     //push in the stack
