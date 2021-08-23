@@ -9,15 +9,23 @@ public class NetworkDelay {
 
     public static int networkDelayTime(int[][] times, int n, int k) {
         Set<Integer> integerSet = new HashSet<Integer>();
+        int cost = 0;
         integerSet.add(k);
         for(int i=0; i<times.length; i++){
             if(times[i][0] == k){
                 Result result = Dfs.getResultByDfs(times, i);
+                if(result.getCost() > cost){
+                    cost = result.getCost();
+                }
                 integerSet.addAll(result.getTraversed());
-                System.out.println(result.toString());
+                //System.out.println(result.toString());
             }
         }
-        return 0;
+
+        if(integerSet.size() < n){
+            return -1;
+        }
+        return cost;
     }
     public static void main(String[] args) {
         int[][] times = {
