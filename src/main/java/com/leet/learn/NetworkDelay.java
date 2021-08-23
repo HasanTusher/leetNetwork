@@ -7,8 +7,9 @@ public class NetworkDelay {
 
     public static int networkDelayTime(int[][] times, int n, int k) {
         for(int i=0; i<times.length; i++){
-            for(int j=0; j<times[i].length;j++){
-                System.out.println(times[i][j]);
+            if(times[i][0] == k){
+                Result result = Dfs.getResultByDfs(times, i);
+                System.out.println(result.toString());
             }
         }
         return 0;

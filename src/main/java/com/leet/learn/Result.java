@@ -19,4 +19,12 @@ public class Result {
     public void setIteration(int iteration) {
         this.iteration = iteration;
     }
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "cost=" + cost +
+                ", iteration=" + iteration +
+                '}';
+    }
 }
