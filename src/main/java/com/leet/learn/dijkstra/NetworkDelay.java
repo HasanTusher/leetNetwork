@@ -91,7 +91,8 @@ public class NetworkDelay {
 
     public  int networkDelayTime(int[][] times, int n, int k) {
         Dijkstra dijkstra = new Dijkstra();
-        dijkstra.getShortestPathToAll(times, k);
+        HashMap<Integer, Integer> integerIntegerHashMap = dijkstra.getShortestPathToAll(times, k);
+        System.out.println(integerIntegerHashMap);
         return 0;
     }
     public static void main(String[] args) {
@@ -99,9 +100,13 @@ public class NetworkDelay {
         int[][] times = {
                 {2,1,1}, // source, dest, time
                 {2,3,1},
-                {3,4,1}
+                {3,2,1}
+//                {1,2,1}, // source, dest, time
+//                {2,3,2},
+//                {1,3,4}
         };
 
+        networkDelay.networkDelayTime(times, 3, 1);
         networkDelay.networkDelayTime(times, 4, 2);
         //System.out.println(integerStack.contains(a));
     }
