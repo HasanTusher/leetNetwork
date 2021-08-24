@@ -4,21 +4,24 @@ import java.util.*;
 
 public class NetworkDelay {
 
-    public class Result {
+    public class Vertex implements Comparable<com.leet.learn.dijkstra.Vertex> {
+        int dest;
         int cost;
-        int iteration;
-        List<Integer> traversed;
 
-        public Result() {
-            this.traversed = new ArrayList<Integer>();
+        public Vertex() {
         }
 
-        public List<Integer> getTraversed() {
-            return traversed;
+        public Vertex(int dest, int cost) {
+            this.dest = dest;
+            this.cost = cost;
         }
 
-        public void setTraversed(List<Integer> traversed) {
-            this.traversed = traversed;
+        public int getDest() {
+            return dest;
+        }
+
+        public void setDest(int dest) {
+            this.dest = dest;
         }
 
         public int getCost() {
@@ -29,26 +32,21 @@ public class NetworkDelay {
             this.cost = cost;
         }
 
-        public int getIteration() {
-            return iteration;
-        }
-
-        public void setIteration(int iteration) {
-            this.iteration = iteration;
+        public int compareTo(com.leet.learn.dijkstra.Vertex vertex) {
+            return this.cost > vertex.cost ? 1 : -1;
         }
 
         @Override
         public String toString() {
-            return "Result{" +
-                    "cost=" + cost +
-                    ", iteration=" + iteration +
-                    ", integerList=" + traversed +
+            return "Vertex{" +
+                    "dest=" + dest +
+                    ", cost=" + cost +
                     '}';
         }
     }
 
 
-    public class Dfs {
+    public class Dijkstra {
 
 
         /**
@@ -58,36 +56,45 @@ public class NetworkDelay {
          *  {3,4,1}
          *
          * @param arr
-         * @param startingIndex
-         * @return
+         * @param startingNode
+         * @return {
+         *
+         * }
          */
-        public Result getResultByDfs(int[][] arr, int startingIndex){
-            Stack<Integer> integerStack = new Stack<Integer>();
-            Result result = new Result();
-            result.setIteration(1);
-            result.setCost(arr[startingIndex][2]);
-
-            integerStack.push(arr[startingIndex][1]);
-            //int source = arr[startingIndex][0];
-            while (!integerStack.isEmpty()){
-                int popped = integerStack.pop();
-                result.getTraversed().add(popped);
-                for(int i = 0; i< arr.length; i++){
-                    if(arr[i][0] == popped){ //found
-                        //push in the stack
-                        integerStack.push(arr[i][1]);
-                        result.setIteration(result.getIteration()+1);
-                        result.setCost(result.getCost()+arr[i][2]);
-                    }
-                }
-
+        public HashMap<Integer, Integer> getShortestPathToAll(int[][] arr, int startingNode){
+            PriorityQueue<Vertex> priorityQueue = new PriorityQueue<Vertex>();
+            List<Integer> visited = new ArrayList<Integer>();
+            HashMap<Integer, Integer> costMap = new HashMap<Integer, Integer>();
+            //create a new node
+            Vertex vertex = new Vertex(startingNode, 0);
+            priorityQueue.add(vertex);
+            while (!priorityQueue.isEmpty()){
+                Vertex popped = priorityQueue.poll();
+                this.findDestinations(arr, popped.dest, popped.cost, priorityQueue, visited, costMap);
+                //System.out.println(priorityQueue);
             }
-            return result;
+            return costMap;
+        }
+
+        private void findDestinations(int[][] arr, int source, int currentCost, PriorityQueue<Vertex> vertices, List<Integer> visited, HashMap<Integer, Integer> costMap){
+            //System.out.println("searching for:" + source);
+            //System.out.println(visited);
+            for(int i =0; i< arr.length; i++){
+                if(arr[i][0] == source){
+                    if(!visited.contains(arr[i][1]))
+                        vertices.add(new Vertex(arr[i][1], currentCost+arr[i][2]));
+                }
+            }
+
+            if(!visited.contains(source) || costMap.get(source) > currentCost){
+                costMap.put(source, currentCost);
+            }
+            visited.add(source);
+//        costMap.put(source, currentCost);
         }
 
 
     }
-
 
     public  int networkDelayTime(int[][] times, int n, int k) {
         Dijkstra dijkstra = new Dijkstra();
@@ -102,19 +109,19 @@ public class NetworkDelay {
 
         return result;
     }
-    public static void main(String[] args) {
-        NetworkDelay networkDelay = new NetworkDelay();
-        int[][] times = {
+//    public static void main(String[] args) {
+//        NetworkDelay networkDelay = new NetworkDelay();
+//        int[][] times = {
 //                {2,1,1}, // source, dest, time
 //                {2,3,1},
-//                {3,2,1}
-                {1,2,1}, // source, dest, time
-                {2,3,2},
-                {1,3,2}
-        };
-
-        //networkDelay.networkDelayTime(times, 3, 1);
-        System.out.println(networkDelay.networkDelayTime(times, 3, 1));
-        //System.out.println(integerStack.contains(a));
-    }
+//                {3,4,1}
+////                {1,2,1}, // source, dest, time
+////                {2,3,2},
+////                {1,3,2}
+//        };
+//
+//        //networkDelay.networkDelayTime(times, 3, 1);
+//        System.out.println(networkDelay.networkDelayTime(times, 4, 2));
+//        //System.out.println(integerStack.contains(a));
+//    }
 }
